@@ -1,26 +1,229 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/* `light:` variant — applies when <html data-theme="light"> (set before first paint). */
+@custom-variant light (&:where([data-theme="light"], [data-theme="light"] *));
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+/*
+ * NexusWeb design tokens.
+ * Dark is the default palette: near-black and deep navy surfaces, electric blue
+ * as the primary signal colour, violet as the secondary, cyan for "connection".
+ * The light theme (below) re-maps the SAME token names, so every utility such as
+ * `bg-ink-900` or `text-pulse-300` adapts automatically — components need no
+ * theme-specific code.
+ */
+@theme {
+  --color-ink-950: #04060c;
+  --color-ink-900: #070b16;
+  --color-ink-850: #0a1020;
+  --color-ink-800: #0e1529;
+  --color-ink-700: #152039;
+  --color-ink-600: #1f2c4d;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  --color-line: rgb(148 163 214 / 0.12);
+  --color-line-strong: rgb(148 163 214 / 0.22);
+
+  --color-text: #e8ecf7;
+  --color-muted: #9aa5c4;
+  --color-subtle: #6b7699;
+
+  --color-pulse-300: #93c0ff;
+  --color-pulse-400: #5c9dff;
+  --color-pulse-500: #3a7bff;
+  --color-pulse-600: #2a5fe0;
+
+  --color-violet-300: #c4b5fd;
+  --color-violet-400: #a78bfa;
+  --color-violet-500: #8b5cf6;
+
+  --color-signal-300: #7ee7f5;
+  --color-signal-400: #3fd3ea;
+
+  --color-amber-300: #fcd34d;
+  --color-emerald-300: #6ee7b7;
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-space-grotesk), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --radius-card: 1.25rem;
+
+  --animate-drift: drift 18s ease-in-out infinite;
+  --animate-pulse-dot: pulse-dot 2.4s ease-in-out infinite;
+
+  @keyframes drift {
+    0%, 100% { transform: translate3d(0, 0, 0); }
+    50% { transform: translate3d(0, -12px, 0); }
+  }
+  @keyframes pulse-dot {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.45; transform: scale(0.8); }
   }
 }
 
+/* Non-colour-utility tokens used by the custom classes below. */
+:root {
+  color-scheme: dark;
+  --grid-line: rgb(148 163 214 / 0.06);
+  --glass-from: rgb(20 30 56 / 0.62);
+  --glass-to: rgb(10 16 32 / 0.62);
+  --text-gradient-from: #e8ecf7;
+  --selection: rgb(58 123 255 / 0.35);
+  --selection-text: #fff;
+}
+
+/* Light theme: same tokens, re-mapped for a bright surface with AA-contrast text. */
+:root[data-theme="light"] {
+  color-scheme: light;
+
+  --color-ink-950: #f5f7fc;
+  --color-ink-900: #ffffff;
+  --color-ink-850: #eef1f9;
+  --color-ink-800: #ffffff;
+  --color-ink-700: #e6eaf5;
+  --color-ink-600: #d6dcec;
+
+  --color-line: rgb(30 41 82 / 0.11);
+  --color-line-strong: rgb(30 41 82 / 0.2);
+
+  --color-text: #0b1030;
+  --color-muted: #47526f;
+  --color-subtle: #5f6886;
+
+  --color-pulse-300: #2453d6;
+  --color-pulse-400: #2f66ea;
+  --color-pulse-500: #2a5fe0;
+  --color-pulse-600: #1f4cc4;
+
+  --color-violet-300: #6436d1;
+  --color-violet-400: #7446e6;
+  --color-violet-500: #7c4dea;
+
+  --color-signal-300: #0b7086;
+  --color-signal-400: #0e8aa3;
+
+  --color-amber-300: #a14b06;
+  --color-emerald-300: #0b7a52;
+
+  --grid-line: rgb(30 41 82 / 0.06);
+  --glass-from: rgb(255 255 255 / 0.82);
+  --glass-to: rgb(244 246 252 / 0.82);
+  --text-gradient-from: #0b1030;
+  --selection: rgb(42 95 224 / 0.22);
+  --selection-text: #0b1030;
+}
+
+html {
+  background: var(--color-ink-950);
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-ink-950);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--selection);
+  color: var(--selection-text);
+}
+
+/* Visible, consistent focus ring for keyboard users. */
+:where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+  outline: 2px solid var(--color-pulse-400);
+  outline-offset: 3px;
+  border-radius: 0.5rem;
+}
+
+@layer components {
+  /* Faint engineering grid used behind hero areas. */
+  .bg-grid {
+    background-image:
+      linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+    background-size: 56px 56px;
+  }
+
+  /* Refined glass surface: used sparingly for cards that sit on visuals. */
+  .glass {
+    background: linear-gradient(180deg, var(--glass-from), var(--glass-to));
+    border: 1px solid var(--color-line);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+  }
+
+  .text-gradient {
+    background: linear-gradient(100deg, var(--text-gradient-from) 10%, var(--color-pulse-300) 55%, var(--color-violet-300) 95%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Gradient hairline border via mask, for premium cards. */
+  .edge-glow {
+    position: relative;
+    isolation: isolate;
+  }
+  .edge-glow::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    padding: 1px;
+    border-radius: inherit;
+    background: linear-gradient(140deg, rgb(92 157 255 / 0.55), rgb(139 92 246 / 0.25) 40%, transparent 70%);
+    mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    mask-composite: exclude;
+    -webkit-mask-composite: xor;
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  .prose-nexus p + p {
+    margin-top: 1rem;
+  }
+}
+
+/*
+ * Theme switch transition. The toggle uses the View Transitions API to reveal the
+ * new theme in an expanding circle from the button; we disable the default
+ * cross-fade so only that clip-path animation runs.
+ */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+::view-transition-old(root) {
+  z-index: 1;
+}
+::view-transition-new(root) {
+  z-index: 2;
+}
+
+/* Fallback for browsers without View Transitions: a short colour cross-fade. */
+html.theme-fade,
+html.theme-fade *,
+html.theme-fade *::before,
+html.theme-fade *::after {
+  transition:
+    background-color 350ms ease,
+    border-color 350ms ease,
+    color 350ms ease,
+    fill 350ms ease,
+    stroke 350ms ease !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

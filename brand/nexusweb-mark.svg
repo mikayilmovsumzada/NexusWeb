@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512"><title>NexusWeb</title><defs>
+    <linearGradient id="t-tf" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#0a0d26"/><stop offset="1" stop-color="#04050c"/>
+    </linearGradient>
+    <linearGradient id="t-ts" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#5a7dff" stop-opacity="0.85"/><stop offset="0.5" stop-color="#4a3fd8" stop-opacity="0.45"/><stop offset="1" stop-color="#7b5cff" stop-opacity="0.85"/>
+    </linearGradient>
+    <radialGradient id="t-tg" cx="0.5" cy="0.38" r="0.6">
+      <stop stop-color="#3b5bff" stop-opacity="0.16"/><stop offset="1" stop-color="#3b5bff" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="t-streak" x1="0" y1="0" x2="1" y2="0">
+      <stop stop-color="#8fb0ff" stop-opacity="0"/><stop offset="0.5" stop-color="#cfe0ff"/><stop offset="1" stop-color="#8fb0ff" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="t-sb" x="-20%" y="-400%" width="140%" height="900%"><feGaussianBlur stdDeviation="4"/></filter>
+    <linearGradient id="m-ribbon" x1="20" y1="20" x2="80" y2="75" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#5aa0ff"/><stop offset="0.55" stop-color="#5b6dff"/><stop offset="1" stop-color="#8a5cff"/>
+    </linearGradient>
+    <linearGradient id="m-edge" x1="20" y1="20" x2="80" y2="75" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#4f8dff" stop-opacity="0.55"/><stop offset="1" stop-color="#7b5cff" stop-opacity="0.55"/>
+    </linearGradient>
+    <linearGradient id="m-sheen" x1="0" y1="0" x2="0" y2="1">
+      <stop stop-color="#ffffff" stop-opacity="0.55"/><stop offset="0.6" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="m-nb" cx="0.35" cy="0.3" r="0.75">
+      <stop stop-color="#cfe2ff"/><stop offset="0.35" stop-color="#5c9dff"/><stop offset="1" stop-color="#2a4fd8"/>
+    </radialGradient>
+    <radialGradient id="m-nv" cx="0.35" cy="0.3" r="0.75">
+      <stop stop-color="#e6dcff"/><stop offset="0.35" stop-color="#8b5cf6"/><stop offset="1" stop-color="#4c2bb8"/>
+    </radialGradient>
+    <radialGradient id="m-nc" cx="0.35" cy="0.3" r="0.75">
+      <stop stop-color="#d4fbff"/><stop offset="0.35" stop-color="#3fd3ea"/><stop offset="1" stop-color="#1688b8"/>
+    </radialGradient>
+    <radialGradient id="m-core" cx="0.38" cy="0.32" r="0.8">
+      <stop stop-color="#ffffff"/><stop offset="0.5" stop-color="#e8e6ff"/><stop offset="1" stop-color="#a9a2ff"/>
+    </radialGradient>
+    <filter id="m-glow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="3.2"/>
+    </filter></defs>
+    <rect x="8" y="8" width="496" height="496" rx="116" fill="url(#t-tf)"/>
+    <rect x="8" y="8" width="496" height="496" rx="116" fill="url(#t-tg)"/>
+    <rect x="8.953846153846154" y="8.953846153846154" width="494.0923076923077" height="494.0923076923077" rx="115.04615384615384" fill="none" stroke="url(#t-ts)" stroke-width="1.9076923076923078"/>
+    
+    <rect x="156.79999999999998" y="7.046153846153846" width="198.4" height="3.8153846153846156" fill="url(#t-streak)" filter="url(#t-sb)"/>
+    <rect x="171.68" y="8" width="168.64000000000001" height="1.9076923076923078" fill="url(#t-streak)"/>
+    <rect x="156.79999999999998" y="501.13846153846157" width="198.4" height="3.8153846153846156" fill="url(#t-streak)" filter="url(#t-sb)"/>
+    <rect x="171.68" y="502.0923076923077" width="168.64000000000001" height="1.9076923076923078" fill="url(#t-streak)"/><g transform="translate(26 37.5) scale(4.6)">
+    <g filter="url(#m-glow)" opacity="0.9">
+      <path d="M50 27.5 L73.1 67.5 L26.9 67.5 Z" fill="none" stroke="#5b6dff" stroke-width="9" stroke-linejoin="round" opacity="0.55"/>
+      <path d="M50 54.2 L50 27.5 M50 54.2 L26.9 67.5 M50 54.2 L73.1 67.5" stroke="#6a7dff" stroke-width="11" stroke-linecap="round"/>
+      <circle cx="50" cy="27.5" r="7.5" fill="#4f8dff"/>
+      <circle cx="26.9" cy="67.5" r="7.5" fill="#8b5cf6"/>
+      <circle cx="73.1" cy="67.5" r="7.5" fill="#3fd3ea"/>
+      <circle cx="50" cy="54.2" r="8.5" fill="#9d95ff"/>
+    </g>
+    <path d="M50 27.5 L73.1 67.5 L26.9 67.5 Z" fill="none" stroke="url(#m-edge)" stroke-width="6.5" stroke-linejoin="round"/>
+    <path d="M50 54.2 L50 27.5 M50 54.2 L26.9 67.5 M50 54.2 L73.1 67.5" stroke="url(#m-ribbon)" stroke-width="8.5" stroke-linecap="round"/>
+    <path d="M50 54.2 L50 27.5 M50 54.2 L26.9 67.5 M50 54.2 L73.1 67.5" stroke="url(#m-sheen)" stroke-width="3" stroke-linecap="round" opacity="0.7"/>
+    
+    <circle cx="50" cy="27.5" r="6.8" fill="url(#m-nb)"/>
+    <ellipse cx="48.096" cy="24.916" rx="3.264" ry="1.9040000000000001" fill="#ffffff" opacity="0.5"/>
+    
+    <circle cx="26.9" cy="67.5" r="6.8" fill="url(#m-nv)"/>
+    <ellipse cx="24.996" cy="64.916" rx="3.264" ry="1.9040000000000001" fill="#ffffff" opacity="0.5"/>
+    
+    <circle cx="73.1" cy="67.5" r="6.8" fill="url(#m-nc)"/>
+    <ellipse cx="71.196" cy="64.916" rx="3.264" ry="1.9040000000000001" fill="#ffffff" opacity="0.5"/>
+    
+    <circle cx="50" cy="54.2" r="8" fill="url(#m-core)"/>
+    <ellipse cx="47.76" cy="51.160000000000004" rx="3.84" ry="2.24" fill="#ffffff" opacity="0.5"/></g></svg>
