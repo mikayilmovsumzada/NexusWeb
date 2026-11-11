@@ -28,6 +28,7 @@ export type SocialLink = {
 /** Published defaults. A matching NEXT_PUBLIC_* variable overrides each one. */
 const defaults = {
   contactEmail: "movsumzademikayil@gmail.com",
+  contactPhone: "+994558000719",
   github: "https://github.com/mikayilmovsumzada",
   linkedin: "https://www.linkedin.com/in/mikay%C4%B1l-m%C3%B6vs%C3%BCmzad%C9%99-5b404538b/",
   instagram: "https://www.instagram.com/nexusweb.az/",
@@ -50,6 +51,9 @@ export const siteConfig = {
 
   /** Public contact address. When empty, the contact form is disabled and says so. */
   contactEmail: env(process.env.NEXT_PUBLIC_CONTACT_EMAIL) ?? defaults.contactEmail,
+
+  /** Public phone number in international format (+994...). When empty, it is not shown. */
+  contactPhone: env(process.env.NEXT_PUBLIC_CONTACT_PHONE) ?? defaults.contactPhone,
 
   /** Social profiles. Only configured ones are shown. */
   social: socialCandidates.filter((s): s is SocialLink => Boolean(s.href)),
@@ -74,10 +78,21 @@ export const siteConfig = {
   },
 } as const;
 
-export function mailtoHref(subject: string, body?: string): string | undefined {
+/** "+994558000719" → "+994 55 800 07 19" (Azerbaijani numbers); other numbers are shown as given. */
+export function formatPhone(phone: string): string {
+  const m = /^\+994(\d{2})(\d{3})(\d{2})(\d{2})$/.exec(phone.replace(/\s+/g, ""));
+  return m ? `+994 ${m[1]} ${m[2]} ${m[3]} ${m[4]}` : phone;
+}
+
+/**
+ * "Write us an email" link that opens Gmail's compose window in the visitor's current browser
+ * (new tab), with our address and the subject already filled in. Works without an email app;
+ * visitors who aren't signed in to Gmail are asked to sign in first.
+ */
+export function composeHref(subject?: string, body?: string): string | undefined {
   if (!siteConfig.contactEmail) return undefined;
-  const params = new URLSearchParams({ subject });
+  const params = new URLSearchParams({ view: "cm", fs: "1", to: siteConfig.contactEmail });
+  if (subject) params.set("su", subject);
   if (body) params.set("body", body);
-  // URLSearchParams encodes spaces as "+", which some mail clients show literally.
-  return `mailto:${siteConfig.contactEmail}?${params.toString().replace(/\+/g, "%20")}`;
+  return `https://mail.google.com/mail/?${params.toString()}`;
 }

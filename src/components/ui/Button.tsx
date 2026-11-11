@@ -34,7 +34,7 @@ export async function ButtonLink({ href, children, variant = "primary", size = "
         <ArrowIcon
           aria-hidden="true"
           size={16}
-          className="transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-px"
+          className="shrink-0 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-px"
         />
       )}
       {newTab && <span className="sr-only"> {ui.common.opensNewTab}</span>}

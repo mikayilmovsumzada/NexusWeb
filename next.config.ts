@@ -14,6 +14,10 @@ const nextConfig: NextConfig = {
   cacheComponents: true,
   partialPrefetching: true,
   poweredByHeader: false,
+  experimental: {
+    // Enables forbidden() and the designed 403 page (src/app/[locale]/forbidden.tsx).
+    authInterrupts: true,
+  },
   turbopack: {
     rules: {
       "*.css": {

@@ -115,6 +115,15 @@ export const ui = {
     products: "See products",
   },
 
+  forbidden: {
+    metaTitle: "Access denied",
+    kicker: "403 · Access denied",
+    title: "This node is protected.",
+    body: "You don't have permission to open this page.",
+    home: "Back to home",
+    contact: "Contact us",
+  },
+
   og: {
     homeEyebrow: "Technology ecosystem",
     homeTitle: "Connecting Minds. Building What's Next.",

@@ -37,12 +37,12 @@ export const homeContent: HomeContent = {
         icon: "graduation",
         accent: "violet",
         name: "NexusWeb Təhsil",
-        status: "planned",
-        statusNote: "Planlaşdırılır — hələ istifadəyə verilməyib",
-        body: "Əlçatan və praktik texnologiya təhsili: kibertəhlükəsizlik, proqramlaşdırma və süni intellekt — yalnız nəzəriyyə ilə deyil, real layihələr üzərində.",
-        points: ["Dərsliklər və texniki bələdçilər", "Praktik laboratoriyalar və layihə izahları", "Kurslar — həqiqətən hazır olduqda"],
+        status: "forming",
+        statusNote: "Qruplar formalaşır",
+        body: "Əlçatan və praktik texnologiya təhsili: kibertəhlükəsizlik, proqramlaşdırma və süni intellekt, yalnız nəzəriyyə ilə deyil, real layihələr üzərində.",
+        points: ["Kibertəhlükəsizlik, süni intellekt və proqramlaşdırma kursları", "Texniki məqalələr və dərsliklər", "Faydalı materialların seçkisi"],
         href: "/learn",
-        linkLabel: "Təhsil planlarına baxın",
+        linkLabel: "Kurslara baxın",
       },
       {
         key: "community",
@@ -116,8 +116,8 @@ export const homeContent: HomeContent = {
       },
       {
         title: "NexusWeb Təhsil",
-        status: "planned",
-        body: "Kibertəhlükəsizlik, süni intellekt və proqramlaşdırma üzrə dərsliklər, laboratoriyalar və kurslar. Hələ heç nə dərc olunmayıb — məzmun hazır olduqda təqdim edəcəyik.",
+        status: "forming",
+        body: "Kibertəhlükəsizlik, süni intellekt və proqramlaşdırma kursları. İlk qruplar formalaşır, müraciətlər qəbul olunur.",
         href: "/learn",
       },
       {

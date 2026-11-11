@@ -31,8 +31,17 @@ export const contactContent: ContactContent = {
   ],
   emailAboutThis: "Bu barədə e-poçt yazın",
 
+  enrollCard: {
+    badge: "Qruplar formalaşır",
+    title: "Kursa yazılın",
+    body: "Kibertəhlükəsizlik, süni intellekt və ya proqramlaşdırma. Müraciət göndərin, başlama tarixi, cədvəl və şərtlər barədə sizinlə əlaqə saxlayaq.",
+    cta: "İndi müraciət edin",
+    courses: "Kurslara baxın",
+  },
+
   elsewhere: "Digər kanallar",
   emailLabel: "E-poçt:",
+  phoneLabel: "Telefon:",
   issuesLink: "GitHub issue-ları vasitəsilə ContextPulse AI rəyi",
 
   formTitle: "Bizə mesaj göndərin",
@@ -43,7 +52,22 @@ export const contactContent: ContactContent = {
     name: "Adınız",
     email: "E-poçtunuz",
     emailHint: "Sizə cavab yaza bilməyimiz üçün.",
-    topic: "Mövzu",
+    topic: "Nə barədədir?",
+    otherTopics: "Digər mövzular",
+    enroll: {
+      label: "Kursa yazılmaq",
+      hint: "Kibertəhlükəsizlik, süni intellekt və ya proqramlaşdırma kursuna müraciət",
+      badge: "Qruplar formalaşır",
+      course: "Hansı kurs?",
+      courses: {
+        cybersecurity: "Kibertəhlükəsizlik",
+        ai: "Süni intellekt",
+        programming: "Proqramlaşdırma və proqram təminatı",
+        undecided: "Hələ qərar verməmişəm, seçməyə kömək edin",
+      },
+      missingCourse: "Zəhmət olmasa, kurs seçin (və ya \"Hələ qərar verməmişəm\").",
+      placeholder: "Yaşınız, hazırkı səviyyəniz və sizinlə necə əlaqə saxlaya biləcəyimiz (məsələn, telefon nömrəsi).",
+    },
     message: "Mesaj",
     placeholder: "Özünüz və ağlınızdakı fikir haqqında bir az yazın.",
     missing: "Zəhmət olmasa, adınızı, düzgün e-poçt ünvanınızı və mesajınızı yazın.",

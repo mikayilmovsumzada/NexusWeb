@@ -67,7 +67,7 @@ export default async function HomePage() {
               <span className="text-gradient">{c.hero.title}</span>
             </h1>
             <p className="mt-7 max-w-xl text-lg leading-relaxed text-muted text-pretty">{c.hero.description}</p>
-            <div className="mt-10 flex flex-col gap-3 sm:flex-row">
+            <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
               <ButtonLink href={c.hero.primaryCta.href} size="lg" arrow>
                 {c.hero.primaryCta.label}
               </ButtonLink>
@@ -132,13 +132,13 @@ export default async function HomePage() {
                     <LocaleLink
                       href={p.href}
                       className={cn(
-                        "inline-flex h-10 items-center gap-2 rounded-full border px-4 text-sm font-medium transition-colors duration-200",
+                        "inline-flex min-h-10 max-w-full items-center gap-2 rounded-full border px-4 py-2 text-sm font-medium leading-snug transition-colors duration-200",
                         "after:absolute after:inset-0 after:rounded-[var(--radius-card)] after:content-['']",
                         s.button,
                       )}
                     >
                       {p.linkLabel}
-                      <ArrowRight aria-hidden="true" size={16} className="transition-transform duration-200 group-hover:translate-x-0.5" />
+                      <ArrowRight aria-hidden="true" size={16} className="shrink-0 transition-transform duration-200 group-hover:translate-x-0.5" />
                     </LocaleLink>
                   </div>
                 </article>
@@ -153,7 +153,7 @@ export default async function HomePage() {
         <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-b from-ink-900 via-ink-850 to-ink-950" />
         <div aria-hidden="true" className="absolute -right-40 top-10 size-[560px] rounded-full bg-pulse-500/10 blur-3xl" />
         <Container className="relative">
-          <div className="edge-glow grid items-center gap-12 rounded-[2rem] bg-ink-900/60 p-6 sm:p-10 lg:grid-cols-2 lg:p-14">
+          <div className="edge-glow grid items-center gap-12 rounded-[2rem] bg-ink-900/60 p-6 sm:p-10 lg:grid-cols-2 lg:p-14 [&>*]:min-w-0">
             <div>
               <div className="flex flex-wrap items-center gap-3">
                 <Eyebrow>{c.featured.eyebrow}</Eyebrow>
@@ -175,7 +175,7 @@ export default async function HomePage() {
                   </li>
                 ))}
               </ul>
-              <div className="mt-10 flex flex-col gap-3 sm:flex-row">
+              <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
                 <ButtonLink href="/products/contextpulse-ai" arrow size="lg">
                   {c.featured.explore}
                 </ButtonLink>

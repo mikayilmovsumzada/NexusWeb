@@ -114,6 +114,15 @@ export const ui: UiContent = {
     products: "Məhsullara bax",
   },
 
+  forbidden: {
+    metaTitle: "Giriş qadağandır",
+    kicker: "403 · Giriş qadağandır",
+    title: "Bu node qorunur.",
+    body: "Bu səhifəni açmaq üçün icazəniz yoxdur.",
+    home: "Ana səhifəyə qayıt",
+    contact: "Bizimlə əlaqə",
+  },
+
   og: {
     homeEyebrow: "Texnologiya ekosistemi",
     homeTitle: "Ağılları birləşdiririk. Gələcəyi qururuq.",

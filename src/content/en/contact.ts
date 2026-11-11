@@ -31,8 +31,17 @@ export const contactContent = {
   ] as Array<{ icon: IconName; title: string; body: string; subject: string }>,
   emailAboutThis: "Email about this",
 
+  enrollCard: {
+    badge: "Groups forming",
+    title: "Apply for a course",
+    body: "Cybersecurity, artificial intelligence or programming. Send an application and we'll contact you about the start date, schedule and terms.",
+    cta: "Apply now",
+    courses: "See the courses",
+  },
+
   elsewhere: "Elsewhere",
   emailLabel: "Email:",
+  phoneLabel: "Phone:",
   issuesLink: "ContextPulse AI feedback via GitHub issues",
 
   formTitle: "Send us a message",
@@ -44,7 +53,22 @@ export const contactContent = {
     name: "Your name",
     email: "Your email",
     emailHint: "So we can reply to you.",
-    topic: "Topic",
+    topic: "What is it about?",
+    otherTopics: "Other topics",
+    enroll: {
+      label: "Course enrolment",
+      hint: "Apply for a cybersecurity, AI or programming course",
+      badge: "Groups forming",
+      course: "Which course?",
+      courses: {
+        cybersecurity: "Cybersecurity",
+        ai: "Artificial Intelligence",
+        programming: "Programming & Software Development",
+        undecided: "Not sure yet, help me choose",
+      },
+      missingCourse: "Please choose a course (or \"Not sure yet\").",
+      placeholder: "Your age, your current level, and the best way to reach you (for example a phone number).",
+    },
     message: "Message",
     placeholder: "Tell us a little about yourself and what you have in mind.",
     missing: "Please add your name, a valid email address and a message.",

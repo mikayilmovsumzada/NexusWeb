@@ -26,14 +26,14 @@ export async function ProductCard({ product, headingLevel = 2 }: { product: Prod
           </li>
         ))}
       </ul>
-      <div className="mt-7 flex items-center justify-between gap-4 border-t border-line pt-5">
+      <div className="mt-7 flex flex-wrap items-center justify-between gap-x-4 gap-y-3 border-t border-line pt-5">
         {/* Real link styled as a button; its ::after overlay makes the whole card clickable. */}
         <LocaleLink
           href={product.href}
-          className="inline-flex h-10 items-center gap-2 rounded-full border border-pulse-400/40 bg-pulse-500/10 px-4 text-sm font-medium text-pulse-300 transition-colors duration-200 after:absolute after:inset-0 after:rounded-[var(--radius-card)] after:content-[''] group-hover:border-pulse-400/80 group-hover:bg-pulse-500/20"
+          className="inline-flex min-h-10 max-w-full items-center gap-2 rounded-full py-2 leading-snug border border-pulse-400/40 bg-pulse-500/10 px-4 text-sm font-medium text-pulse-300 transition-colors duration-200 after:absolute after:inset-0 after:rounded-[var(--radius-card)] after:content-[''] group-hover:border-pulse-400/80 group-hover:bg-pulse-500/20"
         >
           {t.details}
-          <ArrowRight aria-hidden="true" size={16} className="transition-transform duration-200 group-hover:translate-x-0.5" />
+          <ArrowRight aria-hidden="true" size={16} className="shrink-0 transition-transform duration-200 group-hover:translate-x-0.5" />
         </LocaleLink>
         {product.repositoryUrl && (
           <a

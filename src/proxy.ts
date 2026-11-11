@@ -15,20 +15,41 @@ function plain(status: 403 | 404) {
   });
 }
 
+/** Locale for error pages: the visitor's chosen language (cookie), otherwise English. */
+function visitorLocale(request: NextRequest) {
+  const chosen = request.cookies.get(LOCALE_COOKIE)?.value;
+  return hasLocale(chosen) ? chosen : defaultLocale;
+}
+
+/**
+ * Denied or missing admin URLs. API calls get a short plain-text answer; pages opened in a
+ * browser get the site's designed 403/404 page instead (address bar unchanged, real status code).
+ */
+function deny(request: NextRequest, pathname: string, status: 403 | 404) {
+  if (pathname.startsWith("/api/")) return plain(status);
+  const url = request.nextUrl.clone();
+  url.pathname = `/${visitorLocale(request)}${status === 403 ? "/access-denied" : "/__admin-not-found"}`;
+  url.search = "";
+  const res = NextResponse.rewrite(url);
+  for (const [k, v] of Object.entries(PRIVATE_HEADERS)) res.headers.set(k, v);
+  return res;
+}
+
 /**
  * Admin area gate (/admin, /api/admin).
  * - Admin not configured            → 404 (the area doesn't exist).
  * - IP not in ADMIN_ALLOWED_IPS      → 403 everywhere, login page included.
  * - No valid session                 → 403, except the login page and login endpoint.
+ * Pages get the designed 403/404 page of the public site; /api/admin gets plain text.
  * Pages and API handlers check the session again themselves.
  */
 function guardAdmin(request: NextRequest, pathname: string) {
-  if (!adminEnabled()) return plain(404);
-  if (!ipAllowed(clientIp(request.headers))) return plain(403);
+  if (!adminEnabled()) return deny(request, pathname, 404);
+  if (!ipAllowed(clientIp(request.headers))) return deny(request, pathname, 403);
 
   const loggedIn = validSession(request.cookies.get(SESSION_COOKIE)?.value);
   const isLogin = pathname === "/admin/login" || pathname === "/api/admin/login";
-  if (!loggedIn && !isLogin) return plain(403);
+  if (!loggedIn && !isLogin) return deny(request, pathname, 403);
   if (loggedIn && pathname === "/admin/login") {
     return new NextResponse(null, { status: 303, headers: { Location: "/admin", ...PRIVATE_HEADERS } });
   }
@@ -61,7 +82,16 @@ export function proxy(request: NextRequest) {
     return NextResponse.redirect(url, 308);
   }
 
-  if (hasLocale(first)) return NextResponse.next();
+  if (hasLocale(first)) {
+    // "/az/admin…" (e.g. after switching language on the 403 page) gets the same 403 page, in that language.
+    if (pathname.split("/")[2] === "admin") {
+      const url = request.nextUrl.clone();
+      url.pathname = `/${first}/access-denied`;
+      url.search = "";
+      return NextResponse.rewrite(url);
+    }
+    return NextResponse.next();
+  }
 
   const preferred = request.cookies.get(LOCALE_COOKIE)?.value;
   if (hasLocale(preferred) && preferred !== defaultLocale) {

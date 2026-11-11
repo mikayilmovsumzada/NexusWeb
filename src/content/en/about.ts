@@ -53,7 +53,7 @@ export const aboutContent = {
       { icon: "shield", title: "Cybersecurity", body: "Secure-by-default engineering, and accessible security learning." },
       { icon: "brain", title: "Artificial Intelligence", body: "Applied AI that is private, verifiable and genuinely helpful." },
       { icon: "code", title: "Software Development", body: "Well-built products and the craft of making them." },
-      { icon: "graduation", title: "Technology Education", body: "Hands-on resources for people learning technology (planned)." },
+      { icon: "graduation", title: "Technology Education", body: "Courses in cybersecurity, AI and programming; groups are forming." },
       { icon: "sparkles", title: "Digital Innovation", body: "Exploring new ideas and turning the promising ones into products." },
     ] as Feature[],
   },
@@ -85,7 +85,7 @@ export const aboutContent = {
     points: [
       "NexusWeb is an early-stage, independent initiative — not an established company.",
       "Our first product, ContextPulse AI, is in active development.",
-      "Education and community programmes are planned and being designed.",
+      "The first course groups are forming; community programmes are being designed.",
     ],
   },
 

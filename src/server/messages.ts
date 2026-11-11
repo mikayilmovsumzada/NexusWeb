@@ -15,7 +15,10 @@ export type Message = {
   read_at: number | null;
 };
 
-const TOPICS = new Set<string>([...en.form.topics, ...az.form.topics]);
+const ENROLL_TOPICS = new Set<string>([en.form.enroll.label, az.form.enroll.label]);
+const TOPICS = new Set<string>([...en.form.topics, ...az.form.topics, ...ENROLL_TOPICS]);
+type CourseChoice = keyof typeof en.form.enroll.courses;
+const COURSE_CHOICES = new Set<string>(Object.keys(en.form.enroll.courses));
 const EMAIL_RE = /^[^\s@<>()[\]\\,;:"]+@[^\s@<>()[\]\\,;:"]+\.[^\s@<>()[\]\\,;:"]{2,}$/;
 // Control characters except tab/newline are stripped from stored text.
 const CONTROL_RE = /[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/g;
@@ -36,9 +39,15 @@ export function parseMessage(body: Record<string, unknown>): MessageInput | null
   const name = clean(body.name, LIMITS.name);
   const email = clean(body.email, LIMITS.email);
   const message = clean(body.message, LIMITS.message);
-  const topic = typeof body.topic === "string" && TOPICS.has(body.topic) ? body.topic : en.form.topics[0];
+  let topic = typeof body.topic === "string" && TOPICS.has(body.topic) ? body.topic : en.form.topics[0];
   const locale = body.locale === "az" ? "az" : "en";
   if (!name || !email || !message || !EMAIL_RE.test(email)) return null;
+  // Course enrolment: the chosen course is appended to the topic, e.g. "Kursa yazılmaq · Süni intellekt".
+  if (ENROLL_TOPICS.has(topic)) {
+    if (typeof body.course !== "string" || !COURSE_CHOICES.has(body.course)) return null;
+    const strings = locale === "az" ? az.form.enroll : en.form.enroll;
+    topic = `${strings.label} · ${strings.courses[body.course as CourseChoice]}`;
+  }
   return { name, email, topic, message, locale };
 }
 

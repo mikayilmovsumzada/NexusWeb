@@ -4,18 +4,19 @@ export const educationContent: EducationContent = {
   meta: {
     title: "Təhsil",
     description:
-      "NexusWeb Təhsil hazırlanır: kibertəhlükəsizlik, süni intellekt və proqramlaşdırma üzrə planlaşdırılan praktik dərsliklər, laboratoriyalar və kurslar. Hələ heç bir kurs dərc olunmayıb.",
+      "NexusWeb Təhsil: kibertəhlükəsizlik, süni intellekt və proqramlaşdırma üzrə praktik kurslar. Qruplar hazırda formalaşır. Burada həmçinin texniki məqalələr, dərsliklər və faydalı materiallar paylaşılır.",
   },
 
   hero: {
     eyebrow: "NexusWeb Təhsil",
-    title: "Praktik texnologiya təhsili — tezliklə.",
+    title: "Kibertəhlükəsizlik, süni intellekt və proqramlaşdırma kursları.",
     description:
-      "Yalnız oxumağa deyil, etməyə yönəlmiş təhsil platforması hazırlayırıq: kibertəhlükəsizlik, süni intellekt və proqramlaşdırma üzrə dərsliklər, praktik laboratoriyalar və layihə izahları. Hələ heç nə dərc olunmayıb. Bu səhifə nəyi planlaşdırdığımızı göstərir ki, nə gözləyəcəyinizi biləsiniz.",
-    cta: "Planlaşdırılan istiqamətlərə baxın",
+      "Yalnız oxumağa deyil, etməyə yönəlmiş praktik kurslar. İlk qruplar hazırda formalaşır: kursa müraciət edin, başlama tarixi, cədvəl və şərtlər barədə sizinlə əlaqə saxlayacağıq.",
+    enroll: "Kursa yazılın",
+    browse: "Kurslara baxın",
   },
 
-  principlesHeading: { eyebrow: "Necə öyrədəcəyik", title: "Yadda qalan təhsil." },
+  principlesHeading: { eyebrow: "Necə öyrədirik", title: "Yadda qalan təhsil." },
 
   principles: [
     { icon: "flask", title: "Əvvəlcə praktika", body: "Hər mövzu sizin özünüzün qurduğu, sındırdığı və ya qoruduğu bir şeylə bitməlidir." },
@@ -23,91 +24,77 @@ export const educationContent: EducationContent = {
     { icon: "layers", title: "Real layihələrdən", body: "Dərslər ContextPulse AI kimi həqiqətən qurduğumuz məhsullara əsaslanır." },
   ],
 
-  tracksHeading: {
-    eyebrow: "Planlaşdırılan təhsil istiqamətləri",
-    title: "Nələri əhatə etməyi planlaşdırırıq.",
+  coursesHeading: {
+    eyebrow: "Kurslar",
+    title: "Üç kurs, bir praktik yanaşma.",
     description:
-      "Planlaşdırdığımız mövzuları görmək üçün istiqaməti açın. Bunlar dərc olunmuş dərslər deyil, niyyətlərdir — məzmun yayımlandıqca hər istiqamət aydın şəkildə qeyd olunacaq.",
+      "Qruplar hazırda formalaşır. Aşağıdakı mövzular hər kursun əhatə etməsi planlaşdırılan mövzulardır; yekun tədris planını kurs başlamazdan əvvəl müraciət edənlərlə paylaşacağıq.",
   },
 
-  labels: { availableLessons: "Mövcud dərslər", plannedTopics: "Planlaşdırılan mövzular", formats: "Formatlar" },
+  labels: { topics: "Kursda əhatə olunacaq mövzular", formats: "Formatlar", enroll: "Bu kursa yazılın" },
 
-  tracks: [
+  courses: [
     {
       id: "cybersecurity",
       icon: "shield",
       accent: "pulse",
       title: "Kibertəhlükəsizlik",
       summary: "Şəbəkələrdən təhlükəsiz tətbiq dizaynına qədər müdafiə təhlükəsizliyinin əsasları.",
-      status: "planned",
-      plannedTopics: [
+      status: "forming",
+      topics: [
         "Təhlükəsizlik üçün şəbəkə əsasları",
         "Veb tətbiqlərin təhlükəsizliyinin əsasları",
         "Təhlükəsiz autentifikasiya və sessiya idarəsi",
         "Kiçik layihələr üçün təhdid modelləşdirməsi",
         "Capture-the-flag tipli təcrübə laboratoriyaları",
       ],
-      formats: ["Dərsliklər", "Laboratoriyalar"],
+      formats: ["Dərslər", "Laboratoriyalar"],
     },
     {
       id: "ai",
       icon: "brain",
       accent: "violet",
       title: "Süni intellekt",
-      summary: "AI modellərindən real proqram təminatında məsuliyyətlə istifadə — məxfilik və nəticənin yoxlanılması daxil.",
-      status: "planned",
-      plannedTopics: [
+      summary: "AI modellərindən real proqram təminatında məsuliyyətlə istifadə, o cümlədən məxfilik və nəticənin yoxlanılması.",
+      status: "forming",
+      topics: [
         "Böyük dil modelləri tətbiqlərə necə inteqrasiya olunur",
         "Prompt dizaynı və model cavabının yoxlanılması",
         "AI funksiyaları üçün məxfiliyə həssas məlumat emalı",
         "AI xidmətləri işləmədikdə ehtiyat mexanizmlərin qurulması",
       ],
-      formats: ["Bələdçilər", "Layihə izahları"],
+      formats: ["Dərslər", "Layihə işi"],
     },
     {
       id: "programming",
       icon: "code",
       accent: "signal",
       title: "Proqramlaşdırma və proqram təminatı",
-      summary: "Təmiz, test olunmuş, dayanıqlı proqram təminatı yazmaq — və onu istifadəyə vermək.",
-      status: "planned",
-      plannedTopics: [
+      summary: "Təmiz, test olunmuş, dayanıqlı proqram təminatı yazmaq və onu istifadəyə vermək.",
+      status: "forming",
+      topics: [
         "Python və backend API-ları",
         "TypeScript ilə müasir veb interfeyslər",
         "Testləşdirmə və davamlı inteqrasiya",
         "Versiya nəzarəti və Git ilə birgə iş",
       ],
-      formats: ["Kurslar", "Dərsliklər"],
-    },
-    {
-      id: "tutorials",
-      icon: "book",
-      accent: "pulse",
-      title: "Texniki məqalələr və dərsliklər",
-      summary: "Konkret alətlər, üsullar və problemlər haqqında fokuslanmış, praktik yazılar.",
-      status: "planned",
-      plannedTopics: [
-        "Addım-addım texniki bələdçilər",
-        "Təhlükəsizlik və süni intellekt anlayışlarının izahı",
-        "Məhsullarımızı qurarkən öyrəndiklərimiz",
-      ],
-      formats: ["Məqalələr", "Bələdçilər"],
-    },
-    {
-      id: "projects",
-      icon: "terminal",
-      accent: "violet",
-      title: "Praktik layihələr",
-      summary: "Bir neçə istiqamətdən bacarıqları real bir şeydə birləşdirən istiqamətləndirilmiş layihələr.",
-      status: "planned",
-      plannedTopics: [
-        "Birlikdə qurmaq üçün layihə izahları",
-        "ContextPulse AI necə dizayn edilib və qurulub",
-        "Müstəqil təcrübə üçün açıq tapşırıqlar",
-      ],
-      formats: ["Laboratoriyalar", "İzahlar"],
+      formats: ["Dərslər", "Layihələr"],
     },
   ],
+
+  resources: {
+    eyebrow: "Texniki məqalələr və dərsliklər",
+    title: "Oxuyun, izləyin, tətbiq edin.",
+    description:
+      "Öz məqalə və dərsliklərimiz, digər platformalarda paylaşdığımız yazılar və başqa yerlərdə tapdığımız faydalı materiallar, hamısı bir yerdə.",
+    kinds: { article: "Məqalə", tutorial: "Dərslik", curated: "Tövsiyə" },
+    emptyTitle: "İlk yazılar yoldadır",
+    emptyBody: "Məqalələr, dərsliklər və tövsiyə etdiyimiz materiallar dərc etdikcə və topladıqca burada görünəcək.",
+    prev: "Əvvəlki",
+    next: "Növbəti",
+    open: "Aç",
+    listLabel: "Məqalələr və dərsliklər",
+  },
 
   cta: {
     eyebrow: "Tədris planını birlikdə quraq",

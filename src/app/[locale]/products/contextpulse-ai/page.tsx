@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { CheckCircle2, CircleAlert, Clock, ExternalLink, FlaskConical, ImageIcon } from "lucide-react";
-import { siteConfig, mailtoHref } from "@/config/site";
+import { siteConfig, composeHref } from "@/config/site";
 import { getContent, getLocale } from "@/i18n/server";
 import { pageMetadata } from "@/lib/metadata";
 import { PageHero } from "@/components/sections/PageHero";
@@ -14,12 +14,26 @@ import { GitHubIcon } from "@/components/ui/Icon";
 import { ReminderIllustration } from "@/components/visuals/ReminderIllustration";
 
 /**
- * Product demonstrations. Add real screenshots or videos here (files in
- * `public/products/contextpulse-ai/`). The gallery renders only when this is
- * non-empty; otherwise an honest "coming soon" panel is shown. Alt text should
- * be provided for every locale you support.
+ * Product demonstrations: screenshots and videos (files in `public/products/contextpulse-ai/`).
+ * The gallery renders only when this is non-empty; otherwise an honest "coming soon" panel is shown.
+ *
+ *   Image: { type: "image", src: "/products/contextpulse-ai/developer.png", width: 1600, height: 1000,
+ *            alt: { en: "...", az: "..." } }
+ *   Video: { type: "video", src: "/products/contextpulse-ai/walkthrough.mp4", poster: "/products/contextpulse-ai/walkthrough.jpg",
+ *            width: 1920, height: 1080, alt: { en: "...", az: "..." } }
+ *
+ * Videos: MP4 (H.264) plays everywhere; keep each file small (ideally under ~15 MB). Videos never autoplay with sound.
+ * Put a video first if it should be the large, full-width item.
  */
-const media: Array<{ src: string; alt: Record<"en" | "az", string>; width: number; height: number }> = [];
+type Media = {
+  type: "image" | "video";
+  src: string;
+  poster?: string;
+  alt: Record<"en" | "az", string>;
+  width: number;
+  height: number;
+};
+const media: Media[] = [];
 
 const STACK = ["Python", "FastAPI", "SQLite", "Google Gemini", "Anthropic Claude", "React", "Server-Sent Events", "pytest", "Docker"];
 
@@ -41,7 +55,7 @@ export default async function ContextPulsePage() {
   const { contextPulse: c, ui } = await getContent();
   const { contextPulse } = siteConfig;
   const ea = c.earlyAccess;
-  const notifyHref = mailtoHref(ea.emailSubject, ea.emailBody);
+  const notifyHref = composeHref(ea.emailSubject, ea.emailBody);
   const locale = await getLocale();
   const demoUrl = contextPulse.demoUrl; // validated in src/config/url.ts (https / localhost-only http)
 
@@ -72,7 +86,7 @@ export default async function ContextPulsePage() {
         ) : (
           <a
             href="#live-demo"
-            className="inline-flex h-12 items-center gap-2 rounded-full border border-dashed border-line-strong px-6 text-[0.95rem] font-medium text-muted transition-colors hover:border-pulse-400/60 hover:text-text"
+            className="inline-flex min-h-12 max-w-full items-center gap-2 rounded-full border border-dashed border-line-strong px-6 py-2.5 text-[0.95rem] leading-snug font-medium text-muted transition-colors hover:border-pulse-400/60 hover:text-text"
           >
             <span aria-hidden="true" className="size-1.5 rounded-full bg-violet-400" />
             {c.overview.demoUnavailable}
@@ -168,7 +182,7 @@ export default async function ContextPulsePage() {
 
       {/* SOLUTION */}
       <Section labelledBy="solution-title" className="border-t border-line">
-        <div className="grid items-center gap-14 lg:grid-cols-2">
+        <div className="grid items-center gap-14 lg:grid-cols-2 [&>*]:min-w-0">
           <div>
             <SectionHeading id="solution-title" eyebrow={c.solution.eyebrow} title={c.solution.title} />
             <ol role="list" className="mt-10 space-y-6">
@@ -253,9 +267,7 @@ export default async function ContextPulsePage() {
                   <IconTile icon="landmark" accent="pulse" className="shrink-0" />
                   <div>
                     <p className="font-mono text-xs uppercase tracking-[0.14em] text-subtle">{d.date}</p>
-                    <Badge tone="pulse" className="mt-1">
-                      {d.kind}
-                    </Badge>
+                    <p className="mt-1 text-sm font-medium text-pulse-300">{d.kind}</p>
                   </div>
                 </div>
                 <h3 className="font-display text-base font-semibold leading-snug text-text">{d.title}</h3>
@@ -283,9 +295,25 @@ export default async function ContextPulsePage() {
         {media.length > 0 ? (
           <ul role="list" className="mt-12 grid gap-6 md:grid-cols-2">
             {media.map((m) => (
-              <li key={m.src}>
+              <li key={m.src} className={m.type === "video" ? "md:col-span-2" : undefined}>
                 <figure className="overflow-hidden rounded-[var(--radius-card)] border border-line bg-ink-900">
-                  <Image src={m.src} alt={m.alt[locale]} width={m.width} height={m.height} className="h-auto w-full" />
+                  {m.type === "video" ? (
+                    <video
+                      controls
+                      playsInline
+                      preload="metadata"
+                      poster={m.poster}
+                      width={m.width}
+                      height={m.height}
+                      aria-label={m.alt[locale]}
+                      className="h-auto w-full"
+                    >
+                      <source src={m.src} type={m.src.endsWith(".webm") ? "video/webm" : "video/mp4"} />
+                    </video>
+                  ) : (
+                    <Image src={m.src} alt={m.alt[locale]} width={m.width} height={m.height} className="h-auto w-full" />
+                  )}
+                  <figcaption className="border-t border-line px-4 py-3 text-sm text-muted">{m.alt[locale]}</figcaption>
                 </figure>
               </li>
             ))}

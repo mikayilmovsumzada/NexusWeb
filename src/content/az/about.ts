@@ -53,7 +53,7 @@ export const aboutContent: AboutContent = {
       { icon: "shield", title: "Kibertəhlükəsizlik", body: "Standart olaraq təhlükəsiz mühəndislik və əlçatan təhlükəsizlik təhsili." },
       { icon: "brain", title: "Süni intellekt", body: "Məxfi, yoxlanıla bilən və həqiqətən faydalı tətbiqi süni intellekt." },
       { icon: "code", title: "Proqram təminatının hazırlanması", body: "Yaxşı qurulmuş məhsullar və onların yaradılması sənəti." },
-      { icon: "graduation", title: "Texnologiya təhsili", body: "Texnologiya öyrənənlər üçün praktik resurslar (planlaşdırılır)." },
+      { icon: "graduation", title: "Texnologiya təhsili", body: "Kibertəhlükəsizlik, süni intellekt və proqramlaşdırma kursları; qruplar formalaşır." },
       { icon: "sparkles", title: "Rəqəmsal innovasiya", body: "Yeni ideyaları araşdırmaq və perspektivli olanları məhsula çevirmək." },
     ],
   },
@@ -85,7 +85,7 @@ export const aboutContent: AboutContent = {
     points: [
       "NexusWeb erkən mərhələdə olan müstəqil təşəbbüsdür — formalaşmış şirkət deyil.",
       "İlk məhsulumuz ContextPulse AI aktiv şəkildə hazırlanır.",
-      "Təhsil və icma proqramları planlaşdırılır və dizayn edilir.",
+      "İlk kurs qrupları formalaşır; icma proqramları dizayn edilir.",
     ],
   },
 

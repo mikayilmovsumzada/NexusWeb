@@ -52,12 +52,12 @@ export const homeContent = {
         icon: "graduation",
         accent: "violet",
         name: "NexusWeb Education",
-        status: "planned",
-        statusNote: "Planned — not yet launched",
+        status: "forming",
+        statusNote: "Groups are forming",
         body: "Accessible, hands-on technology learning: cybersecurity, programming and AI, taught through real projects rather than theory alone.",
-        points: ["Tutorials and technical guides", "Practical labs and project walkthroughs", "Courses, once they are genuinely ready"],
+        points: ["Courses in cybersecurity, AI and programming", "Technical articles and tutorials", "A curated selection of useful material"],
         href: "/learn",
-        linkLabel: "Preview the learning plans",
+        linkLabel: "See the courses",
       },
       {
         key: "community",
@@ -131,8 +131,8 @@ export const homeContent = {
       },
       {
         title: "NexusWeb Education",
-        status: "planned",
-        body: "Tutorials, labs and courses across cybersecurity, AI and programming. Nothing is published yet — we will launch content when it is ready.",
+        status: "forming",
+        body: "Courses in cybersecurity, AI and programming. The first groups are forming and applications are open.",
         href: "/learn",
       },
       {
