@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import { CheckCircle2, CircleAlert, Clock, FlaskConical, ImageIcon } from "lucide-react";
+import { CheckCircle2, CircleAlert, Clock, ExternalLink, FlaskConical, ImageIcon } from "lucide-react";
 import { siteConfig, mailtoHref } from "@/config/site";
 import { getContent, getLocale } from "@/i18n/server";
 import { pageMetadata } from "@/lib/metadata";
@@ -235,6 +235,46 @@ export default async function ContextPulsePage() {
             </ul>
           </Card>
         </div>
+      </Section>
+
+      {/* NATIONAL CONTEXT */}
+      <Section labelledBy="national-title" className="border-t border-line">
+        <SectionHeading
+          id="national-title"
+          eyebrow={c.nationalContext.eyebrow}
+          title={c.nationalContext.title}
+          description={<p>{c.nationalContext.description}</p>}
+        />
+        <ol role="list" className="mt-12 grid gap-5 lg:grid-cols-3">
+          {c.nationalContext.items.map((d) => (
+            <li key={d.title}>
+              <Card className="flex h-full flex-col gap-4">
+                <div className="flex items-center gap-3">
+                  <IconTile icon="landmark" accent="pulse" className="shrink-0" />
+                  <div>
+                    <p className="font-mono text-xs uppercase tracking-[0.14em] text-subtle">{d.date}</p>
+                    <Badge tone="pulse" className="mt-1">
+                      {d.kind}
+                    </Badge>
+                  </div>
+                </div>
+                <h3 className="font-display text-base font-semibold leading-snug text-text">{d.title}</h3>
+                {d.url && (
+                  <a
+                    href={d.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-auto inline-flex items-center gap-1.5 text-sm font-medium text-pulse-300 underline-offset-4 hover:underline"
+                  >
+                    <ExternalLink aria-hidden="true" size={14} /> {c.nationalContext.sourceLink}
+                    <span className="sr-only"> {ui.common.opensNewTab}</span>
+                  </a>
+                )}
+              </Card>
+            </li>
+          ))}
+        </ol>
+        <p className="mt-6 text-sm text-subtle">{c.nationalContext.disclaimer}</p>
       </Section>
 
       {/* DEMOS */}

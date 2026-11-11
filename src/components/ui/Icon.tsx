@@ -9,6 +9,7 @@ import {
   GitBranch,
   GraduationCap,
   Handshake,
+  Landmark,
   Layers,
   Lightbulb,
   Lock,
@@ -48,6 +49,7 @@ const icons: Record<IconName, LucideIcon> = {
   lightbulb: Lightbulb,
   mail: Mail,
   handshake: Handshake,
+  landmark: Landmark,
 };
 
 export function Icon({ name, className, size = 20 }: { name: IconName; className?: string; size?: number }) {

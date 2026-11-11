@@ -166,6 +166,38 @@ export const contextPulseContent = {
     ],
   },
 
+  nationalContext: {
+    eyebrow: "National context",
+    title: "In step with Azerbaijan's digital and AI priorities.",
+    description:
+      "ContextPulse AI is an AI tool for software teams, built in Azerbaijan. Its aims, responsible and privacy-first use of AI and more productive digital work, match the direction set by these national policy documents.",
+    disclaimer:
+      "Listed for context only. ContextPulse AI is an independent project; listing these documents does not mean it is endorsed by any government body.",
+    sourceLink: "Official text",
+    items: [
+      {
+        kind: "Presidential Order No. 530",
+        date: "19 March 2025",
+        title:
+          "On approving the Artificial Intelligence Strategy of the Republic of Azerbaijan for 2025–2028",
+        url: "https://mincom.gov.az/storage/pages/3533/azerbaycan-respublikasinin-2025-2028-ci-iller-ucun-suni-intellekt-strategiyasinin-tesdiq-edilmesi-haqqinda.pdf",
+      },
+      {
+        kind: "Presidential Decree No. 1464",
+        date: "11 October 2021",
+        title:
+          "On certain measures to improve governance in digitalisation, innovation, high technologies and communications in the Republic of Azerbaijan",
+      },
+      {
+        kind: "Presidential Order",
+        date: "27 February 2026",
+        title:
+          "On approving the Action Plan for accelerating digital development in the Republic of Azerbaijan for 2026–2028",
+        url: "https://president.az/az/articles/view/71719",
+      },
+    ] as Array<{ kind: string; date: string; title: string; url?: string }>,
+  },
+
   status: {
     value: "in-development" as Status,
     heading: "Development status",

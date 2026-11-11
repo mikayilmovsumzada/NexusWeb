@@ -42,7 +42,8 @@ export type IconName =
   | "rocket"
   | "lightbulb"
   | "mail"
-  | "handshake";
+  | "handshake"
+  | "landmark";
 
 export type Product = {
   slug: string;

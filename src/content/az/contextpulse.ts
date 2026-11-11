@@ -157,6 +157,37 @@ export const contextPulseContent: ContextPulseContent = {
     ],
   },
 
+  nationalContext: {
+    eyebrow: "Milli kontekst",
+    title: "Azərbaycanın rəqəmsal və süni intellekt prioritetləri ilə bir istiqamətdə.",
+    description:
+      "ContextPulse AI Azərbaycanda hazırlanan, proqram komandaları üçün süni intellekt alətidir. Onun məqsədləri, yəni süni intellektdən məsuliyyətli və məxfiliyi qoruyan şəkildə istifadə və daha məhsuldar rəqəmsal iş, aşağıdakı dövlət sənədlərinin müəyyən etdiyi istiqamətlə üst-üstə düşür.",
+    disclaimer:
+      "Yalnız kontekst üçün göstərilir. ContextPulse AI müstəqil layihədir; bu sənədlərin burada sadalanması onun hər hansı dövlət orqanı tərəfindən təsdiqləndiyi demək deyil.",
+    sourceLink: "Rəsmi mətn",
+    items: [
+      {
+        kind: "Prezidentin 530 nömrəli Sərəncamı",
+        date: "19 mart 2025",
+        title: "“Azərbaycan Respublikasının 2025–2028-ci illər üçün süni intellekt Strategiyası”nın təsdiq edilməsi haqqında",
+        url: "https://mincom.gov.az/storage/pages/3533/azerbaycan-respublikasinin-2025-2028-ci-iller-ucun-suni-intellekt-strategiyasinin-tesdiq-edilmesi-haqqinda.pdf",
+      },
+      {
+        kind: "Prezidentin 1464 nömrəli Fərmanı",
+        date: "11 oktyabr 2021",
+        title:
+          "“Azərbaycan Respublikasında rəqəmsallaşma, innovasiya, yüksək texnologiyalar və rabitə sahəsində idarəetmənin təkmilləşdirilməsi ilə bağlı bəzi tədbirlər haqqında”",
+      },
+      {
+        kind: "Prezidentin Sərəncamı",
+        date: "27 fevral 2026",
+        title:
+          "“Azərbaycan Respublikasında rəqəmsal inkişafın sürətləndirilməsinə dair 2026–2028-ci illər üçün Fəaliyyət Planı”nın təsdiq edilməsi haqqında",
+        url: "https://president.az/az/articles/view/71719",
+      },
+    ],
+  },
+
   status: {
     value: "in-development",
     heading: "İnkişaf statusu",
