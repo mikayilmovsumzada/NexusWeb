@@ -52,39 +52,61 @@ export function parseMessage(body: Record<string, unknown>): MessageInput | null
 }
 
 /** Pseudonymous sender id (salted IP hash) so repeated senders can be spotted without storing IPs. */
-function senderHash(ip: string): string {
-  return createHash("sha256").update(`${kvGet("sender_salt")}:${ip}`).digest("hex").slice(0, 12);
+async function senderHash(ip: string): Promise<string> {
+  return createHash("sha256").update(`${await kvGet("sender_salt")}:${ip}`).digest("hex").slice(0, 12);
 }
 
-export function saveMessage(input: MessageInput, ip: string): void {
-  db()
+export async function saveMessage(input: MessageInput, ip: string): Promise<void> {
+  const hash = await senderHash(ip);
+  await (await db())
     .prepare(
       "INSERT INTO messages (created_at, name, email, topic, message, locale, sender_hash) VALUES (?, ?, ?, ?, ?, ?, ?)",
     )
-    .run(Date.now(), input.name, input.email, input.topic, input.message, input.locale, senderHash(ip));
+    .bind(Date.now(), input.name, input.email, input.topic, input.message, input.locale, hash)
+    .run();
 }
 
-export function listMessages(filter: "all" | "unread"): Message[] {
+export async function listMessages(filter: "all" | "unread"): Promise<Message[]> {
   const where = filter === "unread" ? "WHERE read_at IS NULL" : "";
-  return db().prepare(`SELECT * FROM messages ${where} ORDER BY created_at DESC LIMIT 500`).all() as Message[];
+  const { results } = await (await db())
+    .prepare(`SELECT * FROM messages ${where} ORDER BY created_at DESC LIMIT 500`)
+    .all<Message>();
+  return results;
 }
 
-export function countMessages(): { total: number; unread: number } {
-  return db()
+export async function countMessages(): Promise<{ total: number; unread: number }> {
+  const row = await (await db())
     .prepare("SELECT COUNT(*) AS total, COALESCE(SUM(read_at IS NULL), 0) AS unread FROM messages")
-    .get() as { total: number; unread: number };
+    .first<{ total: number; unread: number }>();
+  return row ?? { total: 0, unread: 0 };
 }
 
-export function setRead(id: number, read: boolean): void {
-  db().prepare("UPDATE messages SET read_at = ? WHERE id = ?").run(read ? Date.now() : null, id);
+export async function setRead(id: number, read: boolean): Promise<void> {
+  await (await db()).prepare("UPDATE messages SET read_at = ? WHERE id = ?").bind(read ? Date.now() : null, id).run();
 }
 
-export function deleteMessage(id: number): void {
-  db().prepare("DELETE FROM messages WHERE id = ?").run(id);
+export async function deleteMessage(id: number): Promise<void> {
+  await (await db()).prepare("DELETE FROM messages WHERE id = ?").bind(id).run();
+}
+
+/**
+ * Messages from this sender (salted IP hash) in the last hour. Stored in D1, so the
+ * per-sender limit holds across all Worker instances, unlike an in-memory counter.
+ */
+export async function messagesFromSenderLastHour(ip: string): Promise<number> {
+  const hash = await senderHash(ip);
+  const row = await (await db())
+    .prepare("SELECT COUNT(*) AS n FROM messages WHERE sender_hash = ? AND created_at > ?")
+    .bind(hash, Date.now() - 3_600_000)
+    .first<{ n: number }>();
+  return row?.n ?? 0;
 }
 
 /** Messages stored in the last 24 hours, used as a global flood guard. */
-export function messagesToday(): number {
-  const row = db().prepare("SELECT COUNT(*) AS n FROM messages WHERE created_at > ?").get(Date.now() - 86_400_000) as { n: number };
-  return row.n;
+export async function messagesToday(): Promise<number> {
+  const row = await (await db())
+    .prepare("SELECT COUNT(*) AS n FROM messages WHERE created_at > ?")
+    .bind(Date.now() - 86_400_000)
+    .first<{ n: number }>();
+  return row?.n ?? 0;
 }

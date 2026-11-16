@@ -61,12 +61,12 @@ async function Inbox({ searchParams }: { searchParams: PageProps<"/admin">["sear
   await connection(); // always rendered per request, never prerendered or cached
   // The proxy already blocks requests without a session; this is the second check.
   const token = (await cookies()).get(SESSION_COOKIE)?.value;
-  if (!validSession(token)) redirect("/admin/login");
+  if (!(await validSession(token))) redirect("/admin/login");
 
   const sp = await searchParams;
   const filter = sp.filter === "unread" ? "unread" : "all";
-  const messages = listMessages(filter);
-  const counts = countMessages();
+  const messages = await listMessages(filter);
+  const counts = await countMessages();
 
   const tab = (value: "all" | "unread", label: string) => (
     <a

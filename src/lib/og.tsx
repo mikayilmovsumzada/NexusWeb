@@ -1,11 +1,9 @@
-import { readFileSync } from "node:fs";
-import { join } from "node:path";
 import { ImageResponse } from "next/og";
+// Vite inlines the file as a base64 data URI at build time (Workers have no filesystem).
+import markDataUri from "../../brand/nexusweb-mark-512.png?inline";
 
 export const ogSize = { width: 1200, height: 630 };
 
-// Brand mark (generated master in /brand), embedded so the OG renderer needs no network.
-const markDataUri = `data:image/png;base64,${readFileSync(join(process.cwd(), "brand/nexusweb-mark-512.png")).toString("base64")}`;
 
 /** Shared social preview card in the NexusWeb visual language. */
 export function renderOgImage({ eyebrow, title, subtitle, status }: { eyebrow: string; title: string; subtitle: string; status?: string }) {

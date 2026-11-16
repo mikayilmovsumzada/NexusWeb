@@ -6,7 +6,7 @@ import { deleteMessage, setRead } from "@/server/messages";
 /** Inbox actions from the admin page: mark read/unread, delete. */
 export async function POST(request: NextRequest) {
   // The proxy already checked the session; check again here (defence in depth).
-  if (!isSameOrigin(request.headers) || !validSession(request.cookies.get(SESSION_COOKIE)?.value)) {
+  if (!isSameOrigin(request.headers) || !(await validSession(request.cookies.get(SESSION_COOKIE)?.value))) {
     return new NextResponse("Forbidden", { status: 403 });
   }
 
@@ -16,9 +16,9 @@ export async function POST(request: NextRequest) {
   const filter = form?.get("filter") === "unread" ? "?filter=unread" : "";
 
   if (Number.isSafeInteger(id) && id > 0) {
-    if (action === "read") setRead(id, true);
-    else if (action === "unread") setRead(id, false);
-    else if (action === "delete") deleteMessage(id);
+    if (action === "read") await setRead(id, true);
+    else if (action === "unread") await setRead(id, false);
+    else if (action === "delete") await deleteMessage(id);
   }
   return seeOther(`/admin${filter}`);
 }

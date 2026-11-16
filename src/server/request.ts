@@ -1,3 +1,5 @@
+import { serverEnv } from "./env";
+
 /**
  * Request helpers shared by the contact API, the admin API and the proxy.
  */
@@ -5,14 +7,16 @@
 /**
  * The visitor's IP address.
  *
- * Next.js doesn't expose the socket address, so in production the site must run
- * behind a reverse proxy (nginx/Caddy) that overwrites `X-Real-IP`, and Next
- * must listen on 127.0.0.1 only so nobody can reach it around the proxy.
- * Set `TRUST_PROXY=1` to read that header. Without it every visitor is "unknown",
- * which keeps rate limits global and makes an IP allowlist deny everyone (fail closed).
+ * On Cloudflare Workers the edge sets `CF-Connecting-IP` itself and overwrites any
+ * value a visitor sends, so it is always trusted. Elsewhere (a Node server) the site
+ * must run behind a reverse proxy that overwrites `X-Real-IP`; set `TRUST_PROXY=1`
+ * to read that header. Without either, every visitor is "unknown", which keeps rate
+ * limits global and makes an IP allowlist deny everyone (fail closed).
  */
 export function clientIp(headers: Headers): string {
-  if (process.env.TRUST_PROXY?.trim() !== "1") return "unknown";
+  const cfIp = headers.get("cf-connecting-ip")?.trim();
+  if (cfIp && cfIp.length <= 64) return cfIp;
+  if (serverEnv("TRUST_PROXY") !== "1") return "unknown";
   const ip = headers.get("x-real-ip")?.trim();
   return ip && ip.length <= 64 ? ip : "unknown";
 }
@@ -25,7 +29,7 @@ export function isSameOrigin(headers: Headers): boolean {
   const site = headers.get("sec-fetch-site");
   if (site && site !== "same-origin") return false;
   const origin = headers.get("origin");
-  const host = (process.env.TRUST_PROXY?.trim() === "1" && headers.get("x-forwarded-host")) || headers.get("host");
+  const host = (serverEnv("TRUST_PROXY") === "1" && headers.get("x-forwarded-host")) || headers.get("host");
   if (!origin || !host) return false;
   try {
     return new URL(origin).host === host;
@@ -34,7 +38,7 @@ export function isSameOrigin(headers: Headers): boolean {
   }
 }
 
-/** Fixed-window in-memory rate limiter (single process). */
+/** Fixed-window in-memory rate limiter. On Workers it is per isolate, so it's a soft limit; the daily cap in D1 is the hard one. */
 const buckets = new Map<string, { count: number; resetAt: number }>();
 
 export function rateLimit(key: string, limit: number, windowMs: number): boolean {

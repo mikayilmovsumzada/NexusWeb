@@ -43,11 +43,11 @@ function deny(request: NextRequest, pathname: string, status: 403 | 404) {
  * Pages get the designed 403/404 page of the public site; /api/admin gets plain text.
  * Pages and API handlers check the session again themselves.
  */
-function guardAdmin(request: NextRequest, pathname: string) {
+async function guardAdmin(request: NextRequest, pathname: string) {
   if (!adminEnabled()) return deny(request, pathname, 404);
   if (!ipAllowed(clientIp(request.headers))) return deny(request, pathname, 403);
 
-  const loggedIn = validSession(request.cookies.get(SESSION_COOKIE)?.value);
+  const loggedIn = await validSession(request.cookies.get(SESSION_COOKIE)?.value);
   const isLogin = pathname === "/admin/login" || pathname === "/api/admin/login";
   if (!loggedIn && !isLogin) return deny(request, pathname, 403);
   if (loggedIn && pathname === "/admin/login") {
@@ -67,7 +67,7 @@ function guardAdmin(request: NextRequest, pathname: string) {
  *                chosen Azerbaijani before (cookie), they are redirected to "/az/...".
  * The default language is never guessed from Accept-Language: English stays the primary site.
  */
-export function proxy(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const { pathname, search } = request.nextUrl;
   const first = pathname.split("/")[1];
 

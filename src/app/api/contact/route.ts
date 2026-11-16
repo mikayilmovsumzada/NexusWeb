@@ -1,6 +1,6 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { clientIp, isSameOrigin, rateLimit } from "@/server/request";
-import { messagesToday, parseMessage, saveMessage } from "@/server/messages";
+import { messagesFromSenderLastHour, messagesToday, parseMessage, saveMessage } from "@/server/messages";
 
 /**
  * Contact form endpoint. Stores the message for the admin inbox (/admin).
@@ -43,10 +43,11 @@ export async function POST(request: NextRequest) {
 
   const ip = clientIp(request.headers);
   if (!rateLimit(`contact:${ip}`, PER_IP_PER_HOUR, 3_600_000)) return reply(429, "rate_limited");
-  if (messagesToday() >= GLOBAL_PER_DAY) return reply(429, "rate_limited");
+  if (ip !== "unknown" && (await messagesFromSenderLastHour(ip)) >= PER_IP_PER_HOUR) return reply(429, "rate_limited");
+  if ((await messagesToday()) >= GLOBAL_PER_DAY) return reply(429, "rate_limited");
 
   try {
-    saveMessage(input, ip);
+    await saveMessage(input, ip);
   } catch (error) {
     console.error("[contact] Could not store message:", error);
     return reply(500, "server");
