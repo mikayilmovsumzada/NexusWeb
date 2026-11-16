@@ -42,7 +42,7 @@ Bu repoda NexusWeb-in rəsmi saytının kodu yerləşir.
 
 ## Texnologiyalar
 
-Next.js 16, React 19, TypeScript, Tailwind CSS v4 və SQLite.
+Next.js 16 (Cloudflare Workers üçün [vinext](https://github.com/cloudflare/vinext) ilə), React 19, TypeScript, Tailwind CSS v4 və Cloudflare D1 (SQLite).
 
 ## Lokal işə salmaq
 
@@ -53,7 +53,24 @@ npm install
 npm run dev
 ```
 
-Sonra brauzerdə `http://localhost:3000` ünvanını açın.
+Sonra brauzerdə `http://localhost:3000` ünvanını açın. Sayt lokal olaraq da Cloudflare-in Workers mühitində (workerd) işləyir, verilənlər bazası `.cloudflare/` qovluğundakı lokal D1-dədir.
+
+Hazır versiyanı lokal yoxlamaq üçün:
+
+```bash
+npm run build
+npm run start
+```
+
+## Yerləşdirmə (Cloudflare Workers)
+
+Sayt Cloudflare Workers-də işləyir. Ayarlar `cloudflare.config.ts` faylındadır. Əl ilə yerləşdirmək üçün:
+
+```bash
+npm run deploy
+```
+
+Pulsuz `*.workers.dev` ünvanı və preview linkləri söndürülüb (`cloudflare.config.ts`-də `workersDev: false`), yəni sayt yalnız öz domeni (nexusweb.az) bağlanandan sonra ictimaiyyətə açılır. İlk dəfə yerləşdirərkən Cloudflare `nexusweb` adlı D1 bazasını özü yaradır. Admin paneli üçün iki gizli açar lazımdır: `ADMIN_PASSWORD_HASH` və `ADMIN_TOTP_SECRET`. Dəyərləri `npm run admin:setup -- --print` əmri verir. Lokal işləyərkən onlar `.env.local` faylında saxlanılır. Bu açarlar yoxdursa, admin bölməsi 404 qaytarır.
 
 ## Əlaqə
 
