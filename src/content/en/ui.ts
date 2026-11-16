@@ -78,6 +78,8 @@ export const ui = {
 
   productCard: {
     kicker: "NexusWeb Product",
+    labKicker: "NexusWeb Labs · Open source",
+    viewOnGitHub: "View on GitHub",
     categoriesLabel: "Technology categories",
     details: "View product details",
     repository: "Repository",

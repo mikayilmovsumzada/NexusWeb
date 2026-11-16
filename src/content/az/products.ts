@@ -14,6 +14,12 @@ export const productsContent: ProductsContent = {
       description:
         "Məxfiliyi ön planda tutan proqramçı iş axını və kontekst bərpası aləti. IDE və pull request metadatası ilə proqramçılara harada qaldıqlarını xatırladır, komanda rəhbərlərinə isə tıxanmaları yalnız anonim, komanda səviyyəsində göstərir.",
     },
+    auditpulse: {
+      name: "AuditPulse",
+      tagline: "Linux serverinizdə nə dəyişdi və kim dəyişdi, görün.",
+      description:
+        "Linux serverlər üçün açıq mənbəli fayl audit paneli. Xam auditd loglarını səliqəli, canlı cədvələ çevirir: yaradılan, silinən və adı dəyişən fayllar, chmod və chown dəyişiklikləri, rədd edilmiş giriş cəhdləri. Hər hadisədə proqram, əmr və vaxt görünür. Yerli işləyir və bir əmrlə quraşdırılır.",
+    },
   },
 
   hero: {

@@ -77,6 +77,8 @@ export const ui: UiContent = {
 
   productCard: {
     kicker: "NexusWeb məhsulu",
+    labKicker: "NexusWeb Labs · Açıq mənbə",
+    viewOnGitHub: "GitHub-da baxın",
     categoriesLabel: "Texnologiya kateqoriyaları",
     details: "Məhsul haqqında ətraflı",
     repository: "Repozitoriya",

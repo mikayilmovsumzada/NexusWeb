@@ -10,11 +10,16 @@ export async function ProductCard({ product, headingLevel = 2 }: { product: Prod
   const { ui } = await getContent();
   const t = ui.productCard;
   const Heading = headingLevel === 2 ? "h2" : "h3";
+  const isLab = product.kind === "lab";
+  // Labs have no product page, so the card's main link goes to the repository.
+  const mainHref = product.href ?? product.repositoryUrl;
+  const mainLinkClass =
+    "inline-flex min-h-10 max-w-full items-center gap-2 rounded-full py-2 leading-snug border border-pulse-400/40 bg-pulse-500/10 px-4 text-sm font-medium text-pulse-300 transition-colors duration-200 after:absolute after:inset-0 after:rounded-[var(--radius-card)] after:content-[''] group-hover:border-pulse-400/80 group-hover:bg-pulse-500/20";
   return (
     <article className="edge-glow group relative flex h-full flex-col rounded-[var(--radius-card)] bg-gradient-to-b from-ink-800/80 to-ink-900/80 p-7 transition-transform duration-300 hover:-translate-y-0.5">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <StatusBadge status={product.status} />
-        <span className="font-mono text-xs text-subtle">{t.kicker}</span>
+        <span className="font-mono text-xs text-subtle">{isLab ? t.labKicker : t.kicker}</span>
       </div>
       <Heading className="mt-6 font-display text-2xl font-semibold tracking-tight text-text">{product.name}</Heading>
       <p className="mt-2 font-medium text-pulse-300">{product.tagline}</p>
@@ -28,14 +33,24 @@ export async function ProductCard({ product, headingLevel = 2 }: { product: Prod
       </ul>
       <div className="mt-7 flex flex-wrap items-center justify-between gap-x-4 gap-y-3 border-t border-line pt-5">
         {/* Real link styled as a button; its ::after overlay makes the whole card clickable. */}
-        <LocaleLink
-          href={product.href}
-          className="inline-flex min-h-10 max-w-full items-center gap-2 rounded-full py-2 leading-snug border border-pulse-400/40 bg-pulse-500/10 px-4 text-sm font-medium text-pulse-300 transition-colors duration-200 after:absolute after:inset-0 after:rounded-[var(--radius-card)] after:content-[''] group-hover:border-pulse-400/80 group-hover:bg-pulse-500/20"
-        >
-          {t.details}
-          <ArrowRight aria-hidden="true" size={16} className="shrink-0 transition-transform duration-200 group-hover:translate-x-0.5" />
-        </LocaleLink>
-        {product.repositoryUrl && (
+        {product.href ? (
+          <LocaleLink href={product.href} className={mainLinkClass}>
+            {t.details}
+            <ArrowRight aria-hidden="true" size={16} className="shrink-0 transition-transform duration-200 group-hover:translate-x-0.5" />
+          </LocaleLink>
+        ) : (
+          mainHref && (
+            <a href={mainHref} target="_blank" rel="noopener noreferrer" className={mainLinkClass}>
+              <GitHubIcon size={15} />
+              {t.viewOnGitHub}
+              <span className="sr-only">
+                {" "}
+                {t.repositoryFor} {product.name} {ui.common.opensNewTab}
+              </span>
+            </a>
+          )
+        )}
+        {product.href && product.repositoryUrl && (
           <a
             href={product.repositoryUrl}
             target="_blank"

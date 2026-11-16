@@ -13,6 +13,12 @@ export const productsContent = {
       description:
         "A privacy-first developer workflow and context-recovery tool. It uses IDE and pull-request metadata to remind developers where they left off, and shows team leads blockers only at an anonymised, team level.",
     },
+    auditpulse: {
+      name: "AuditPulse",
+      tagline: "See what changed on your Linux server, and who changed it.",
+      description:
+        "An open-source file-audit panel for Linux servers. It turns raw auditd logs into a clear, live table: files created, deleted, renamed, chmod and chown changes, and denied access attempts, with the program, command and time for each one. It runs locally and installs with one command.",
+    },
   } as Record<string, { name: string; tagline: string; description: string }>,
 
   hero: {
