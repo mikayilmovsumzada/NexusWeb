@@ -24,6 +24,11 @@ const kindTone: Record<Resource["kind"], string> = {
  * Horizontal carousel built on native scroll-snap: swipe on touch screens,
  * scroll with trackpad, or use the prev/next buttons. Each card is a real link.
  */
+const MONTHS = {
+  az: ["yan", "fev", "mar", "apr", "may", "iyn", "iyl", "avq", "sen", "okt", "noy", "dek"],
+  en: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+} as const;
+
 export function ResourceCarousel({ items, t, locale }: { items: Resource[]; t: Strings; locale: "en" | "az" }) {
   const track = useRef<HTMLUListElement>(null);
   const [edges, setEdges] = useState({ start: true, end: true });
@@ -54,7 +59,12 @@ export function ResourceCarousel({ items, t, locale }: { items: Resource[]; t: S
     el.scrollBy({ left: dir * step, behavior: "smooth" });
   };
 
-  const dateFmt = new Intl.DateTimeFormat(locale === "az" ? "az-AZ" : "en-GB", { day: "numeric", month: "short", year: "numeric" });
+  // Formatted by hand: Node's ICU lacks Azerbaijani month names, so Intl output differs
+  // between server and browser and breaks hydration.
+  const formatDate = (iso: string) => {
+    const [y, m, d] = iso.split("-").map(Number);
+    return `${d} ${MONTHS[locale][m - 1]} ${y}`;
+  };
   const navBtn =
     "inline-flex size-10 items-center justify-center rounded-full border border-line-strong bg-ink-800/40 text-text transition-colors hover:border-pulse-400/60 disabled:cursor-not-allowed disabled:opacity-40";
 
@@ -92,9 +102,10 @@ export function ResourceCarousel({ items, t, locale }: { items: Resource[]; t: S
                 <span className="font-mono text-xs text-subtle">{r.source}</span>
               </div>
               <h3 className="mt-4 font-display text-lg font-semibold leading-snug text-text">{r.title}</h3>
+              {r.author && <p className="mt-1 text-sm text-subtle">{r.author}</p>}
               {r.summary && <p className="mt-2 text-sm leading-relaxed text-muted">{r.summary}</p>}
               <div className="mt-auto flex items-center justify-between gap-3 pt-5 text-sm">
-                <span className="text-subtle">{r.date ? dateFmt.format(new Date(r.date)) : ""}</span>
+                <span className="text-subtle">{r.date ? formatDate(r.date) : ""}</span>
                 <span className="inline-flex items-center gap-1 font-medium text-pulse-300">
                   {t.open}
                   <ArrowUpRight aria-hidden="true" size={15} className="shrink-0 transition-transform group-hover:-translate-y-px group-hover:translate-x-0.5" />

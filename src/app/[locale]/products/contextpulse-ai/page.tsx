@@ -12,6 +12,7 @@ import { Badge, StatusBadge } from "@/components/ui/Badge";
 import { Card, FeatureGrid, IconTile } from "@/components/ui/Card";
 import { GitHubIcon } from "@/components/ui/Icon";
 import { ReminderIllustration } from "@/components/visuals/ReminderIllustration";
+import { DemoVideo } from "@/components/ui/DemoVideo";
 
 /**
  * Product demonstrations: screenshots and videos (files in `public/products/contextpulse-ai/`).
@@ -22,18 +23,53 @@ import { ReminderIllustration } from "@/components/visuals/ReminderIllustration"
  *   Video: { type: "video", src: "/products/contextpulse-ai/walkthrough.mp4", poster: "/products/contextpulse-ai/walkthrough.jpg",
  *            width: 1920, height: 1080, alt: { en: "...", az: "..." } }
  *
- * Videos: MP4 (H.264) plays everywhere; keep each file small (ideally under ~15 MB). Videos never autoplay with sound.
+ * `src` / `poster` may be one path or one per locale ({ en: "...", az: "..." }) for localized videos.
+ * Videos: MP4 (H.264) plays everywhere; keep each file small (ideally under ~15 MB). Videos never autoplay.
  * Put a video first if it should be the large, full-width item.
  */
+type Localized = string | Record<"en" | "az", string>;
 type Media = {
   type: "image" | "video";
-  src: string;
-  poster?: string;
+  src: Localized;
+  poster?: Localized;
   alt: Record<"en" | "az", string>;
   width: number;
   height: number;
 };
-const media: Media[] = [];
+const pick = (v: Localized, locale: "en" | "az") => (typeof v === "string" ? v : v[locale]);
+const media: Media[] = [
+  {
+    type: "video",
+    src: { en: "/products/contextpulse-ai/walkthrough-en.mp4", az: "/products/contextpulse-ai/walkthrough-az.mp4" },
+    poster: { en: "/products/contextpulse-ai/walkthrough-en.jpg", az: "/products/contextpulse-ai/walkthrough-az.jpg" },
+    width: 1280,
+    height: 800,
+    alt: {
+      en: "Walkthrough (2:04, with music and step captions): a developer returns from a break and gets an AI reminder of where they left off, then records the reason anonymously. The team lead plans an action on a team-level blocker and sends an announcement, which the developer sees live.",
+      az: "İzah videosu (2:08, musiqi və addım-addım yazılarla): proqramçı fasilədən qayıdır, AI ona harada qaldığını xatırladır, o da fasilə səbəbini anonim qeyd edir. Komanda rəhbəri komanda səviyyəsindəki əngəl üçün tədbir planlaşdırır və elan göndərir, proqramçı isə bunu canlı görür.",
+    },
+  },
+  {
+    type: "image",
+    src: "/products/contextpulse-ai/developer-panel.png",
+    width: 1195,
+    height: 945,
+    alt: {
+      en: "Developer panel: live IDE metadata (file, first error, tests, pull request) and personal break history. No screen capture, keystrokes or source code.",
+      az: "Proqramçı paneli: canlı IDE metaməlumatı (fayl, ilk xəta, testlər, pull request) və şəxsi fasilə tarixçəsi. Ekran görüntüsü, düymə basışları və mənbə kodu toplanmır.",
+    },
+  },
+  {
+    type: "image",
+    src: "/products/contextpulse-ai/manager-panel.png",
+    width: 1195,
+    height: 945,
+    alt: {
+      en: "Team lead panel: team-level blockers under k-anonymity (k=5) with action tracking. No individual employee data is shown.",
+      az: "Komanda rəhbəri paneli: k-anonimlik (k=5) ilə komanda səviyyəsində əngəllər və görülən tədbirlərin izlənməsi. Fərdi işçi məlumatı göstərilmir.",
+    },
+  },
+];
 
 const STACK = ["Python", "FastAPI", "SQLite", "Google Gemini", "Anthropic Claude", "React", "Server-Sent Events", "pytest", "Docker"];
 
@@ -295,23 +331,19 @@ export default async function ContextPulsePage() {
         {media.length > 0 ? (
           <ul role="list" className="mt-12 grid gap-6 md:grid-cols-2">
             {media.map((m) => (
-              <li key={m.src} className={m.type === "video" ? "md:col-span-2" : undefined}>
+              <li key={pick(m.src, "en")} className={m.type === "video" ? "md:col-span-2" : undefined}>
                 <figure className="overflow-hidden rounded-[var(--radius-card)] border border-line bg-ink-900">
                   {m.type === "video" ? (
-                    <video
-                      controls
-                      playsInline
-                      preload="metadata"
-                      poster={m.poster}
+                    <DemoVideo
+                      key={pick(m.src, locale)}
+                      src={pick(m.src, locale)}
+                      poster={m.poster && pick(m.poster, locale)}
                       width={m.width}
                       height={m.height}
-                      aria-label={m.alt[locale]}
-                      className="h-auto w-full"
-                    >
-                      <source src={m.src} type={m.src.endsWith(".webm") ? "video/webm" : "video/mp4"} />
-                    </video>
+                      label={m.alt[locale]}
+                    />
                   ) : (
-                    <Image src={m.src} alt={m.alt[locale]} width={m.width} height={m.height} className="h-auto w-full" />
+                    <Image src={pick(m.src, locale)} alt={m.alt[locale]} width={m.width} height={m.height} sizes="(min-width: 768px) 50vw, 100vw" className="h-auto w-full" />
                   )}
                   <figcaption className="border-t border-line px-4 py-3 text-sm text-muted">{m.alt[locale]}</figcaption>
                 </figure>
@@ -399,7 +431,8 @@ export default async function ContextPulsePage() {
 
       {/* EARLY ACCESS */}
       <CtaBand
-        id="early-access"
+        id="early-access-title"
+        anchorId="early-access"
         eyebrow={ea.eyebrow}
         title={contextPulse.betaSignupUrl ? ea.titleOpen : ea.titleClosed}
         description={
