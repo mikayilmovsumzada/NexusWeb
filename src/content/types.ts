@@ -53,12 +53,10 @@ export type Product = {
   description: string;
   status: Status;
   categories: TechCategory[];
-  /** Internal product page. Omitted for labs, whose card links to the repository instead. */
+  /** Internal product page. When omitted, the card links to the repository instead. */
   href?: string;
   repositoryUrl?: string;
   featured?: boolean;
-  /** "lab" = open-source side project shown alongside products, without its own page. */
-  kind?: "product" | "lab";
 };
 
 export type Feature = {

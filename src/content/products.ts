@@ -9,7 +9,7 @@ import type { Product, Status, TechCategory } from "./types";
  *      src/content/en/products.ts and src/content/az/products.ts.
  *   3. Create its page at `src/app/[locale]/products/<slug>/page.tsx`.
  * It then appears on /products and in the sitemap automatically.
- * A `kind: "lab"` entry needs no page: omit `href` and set `repositoryUrl`.
+ * A product without its own page yet: omit `href` and set `repositoryUrl` (the card links to GitHub).
  */
 const registry: Array<{
   slug: string;
@@ -18,7 +18,6 @@ const registry: Array<{
   href?: string;
   repositoryUrl?: string;
   featured?: boolean;
-  kind?: "product" | "lab";
 }> = [
   {
     slug: "contextpulse-ai",
@@ -29,9 +28,8 @@ const registry: Array<{
     featured: true,
   },
   {
-    // Open-source lab: no product page yet, the card links to GitHub.
+    // No product page yet: the card links to GitHub.
     slug: "auditpulse",
-    kind: "lab",
     status: "live",
     categories: ["Cybersecurity", "Software Development"],
     repositoryUrl: "https://github.com/mikayilmovsumzada/AuditPulse",

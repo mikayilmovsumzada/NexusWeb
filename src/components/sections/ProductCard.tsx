@@ -10,8 +10,7 @@ export async function ProductCard({ product, headingLevel = 2 }: { product: Prod
   const { ui } = await getContent();
   const t = ui.productCard;
   const Heading = headingLevel === 2 ? "h2" : "h3";
-  const isLab = product.kind === "lab";
-  // Labs have no product page, so the card's main link goes to the repository.
+  // A product without its own page links straight to its repository.
   const mainHref = product.href ?? product.repositoryUrl;
   const mainLinkClass =
     "inline-flex min-h-10 max-w-full items-center gap-2 rounded-full py-2 leading-snug border border-pulse-400/40 bg-pulse-500/10 px-4 text-sm font-medium text-pulse-300 transition-colors duration-200 after:absolute after:inset-0 after:rounded-[var(--radius-card)] after:content-[''] group-hover:border-pulse-400/80 group-hover:bg-pulse-500/20";
@@ -19,7 +18,7 @@ export async function ProductCard({ product, headingLevel = 2 }: { product: Prod
     <article className="edge-glow group relative flex h-full flex-col rounded-[var(--radius-card)] bg-gradient-to-b from-ink-800/80 to-ink-900/80 p-7 transition-transform duration-300 hover:-translate-y-0.5">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <StatusBadge status={product.status} />
-        <span className="font-mono text-xs text-subtle">{isLab ? t.labKicker : t.kicker}</span>
+        <span className="font-mono text-xs text-subtle">{t.kicker}</span>
       </div>
       <Heading className="mt-6 font-display text-2xl font-semibold tracking-tight text-text">{product.name}</Heading>
       <p className="mt-2 font-medium text-pulse-300">{product.tagline}</p>
